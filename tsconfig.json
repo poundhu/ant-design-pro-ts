@@ -5,6 +5,8 @@
         "moduleResolution": "node",
         "jsx": "react",
         "baseUrl": "./src",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "experimentalDecorators": true,
         "paths": {
             "components": ["src/components"],

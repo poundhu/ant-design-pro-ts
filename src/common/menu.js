@@ -3,21 +3,22 @@ import {
 } from '../utils/utils';
 
 const menuData = [
-    // {
-    //         name: 'dashboard',
-    //         icon: 'dashboard',
-    //         path: 'Dashboard',
-    //         children: [{
-    //             name: '分析页',
-    //             path: 'Analysis',
-    //         }, {
-    //             name: '监控页',
-    //             path: 'Monitor',
-    //         }, {
-    //             name: '工作台',
-    //             path: 'Workplace',
-    //         }],
-    //     }, {
+    {
+        name: 'dashboard',
+        icon: 'dashboard',
+        path: 'Dashboard',
+        children: [{
+            name: '分析页',
+            path: 'Analysis',
+        }, {
+            name: '监控页',
+            path: 'Monitor',
+        }, {
+            name: '工作台',
+            path: 'Workplace',
+        }],
+    },
+    //  {
     //         name: '表单页',
     //         icon: 'form',
     //         path: 'Forms',

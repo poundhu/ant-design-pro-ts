@@ -1,11 +1,56 @@
 {
-    "extends": [
-        "tslint-react"
-    ],
+    "extends": ["tslint", "tslint-react"],
     "rules": {
+        "arrow-parens": false,
+        "arrow-return-shorthand": [false],
+        "import-blacklist": [true, "rxjs"],
+        "interface-over-type-literal": false,
+        "interface-name": false,
+        "max-line-length": [true, 120],
+        "member-access": false,
+        "member-ordering": [true, {
+            "order": "fields-first"
+        }],
+        "newline-before-return": false,
+        "no-any": false,
+        "no-empty-interface": false,
+        "no-import-side-effect": [true],
+        "no-inferrable-types": [true, "ignore-params", "ignore-properties"],
+        "no-invalid-this": [true, "check-function-in-method"],
+        "no-null-keyword": false,
+        "no-require-imports": false,
+        "no-submodule-imports": false,
+        "no-this-assignment": [true, {
+            "allow-destructuring": true
+        }],
+        "no-trailing-whitespace": true,
+        "object-literal-sort-keys": false,
+        "object-literal-shorthand": false,
+        "one-variable-per-declaration": [false],
+        "only-arrow-functions": [true, "allow-declarations"],
+        "ordered-imports": [false],
+        "prefer-method-signature": false,
+        "prefer-template": [true, "allow-single-concat"],
+        "quotemark": [true, "single", "jsx-double"],
+        "semicolon": [true, "always"],
+        "trailing-comma": [true, {
+            "singleline": "never",
+            "multiline": {
+                "objects": "always",
+                "arrays": "always",
+                "functions": "never",
+                "typeLiterals": "ignore"
+            },
+            "esSpecCompliant": true
+        }],
+        "triple-equals": [true, "allow-null-check"],
+        "type-literal-delimiter": true,
+        "typedef": [true, "property-declaration"],
+        "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
+        "jsx-no-lambda": false,
         "align": false,
         "ban": false,
-        "class-name": true,
+        "class-name": false,
         "jsx-curly-spacing": false,
         "jsx-boolean-value": false,
         "comment-format": false,
@@ -15,16 +60,9 @@
         "indent": false,
         "jsx-self-close": false,
         "whitespace": false,
-        "interface-name": [
-            true,
-            "never-prefix"
-        ],
         "jsdoc-format": true,
-        "jsx-no-lambda": false,
         "jsx-no-multiline-js": false,
         "label-position": true,
-        "max-line-length": false,
-        "no-any": false,
         "no-arg": true,
         "no-bitwise": true,
         "no-console": false,
@@ -37,23 +75,9 @@
         "no-shadowed-variable": false,
         "no-string-literal": true,
         "no-switch-case-fall-through": true,
-        "no-trailing-whitespace": false,
         "no-unused-expression": false,
         "one-line": false,
-        "quotemark": false,
         "radix": true,
-        "semicolon": false,
-        "switch-default": true,
-        "trailing-comma": false,
-        "triple-equals": [
-            true,
-            "allow-null-check"
-        ],
-        "typedef": [
-            true,
-            "parameter",
-            "property-declaration"
-        ],
         "typedef-whitespace": [
             true,
             {
@@ -64,12 +88,9 @@
                 "variable-declaration": "nospace"
             }
         ],
-        "variable-name": [
-            true,
-            "ban-keywords",
-            "check-format",
-            "allow-leading-underscore",
-            "allow-pascal-case"
-        ]
+        "no-unused-vars": [2, {
+            "vars": "all",
+            "args": "all"
+        }]
     }
 }

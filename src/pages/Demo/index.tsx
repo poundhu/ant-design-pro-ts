@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import { Table } from 'antd';
+import * as React from 'react';
 
-export default class Demo extends Component {
+
+export default class Index extends React.Component<any, any> {
+
   render() {
     return (
-      <div>
-        demo
-      </div>
-    )
+      <Table />
+    );
   }
 }
