@@ -6,7 +6,7 @@ import styles from './PageHeaderLayout.less';
 interface PageHeaderLayout {
   children?: React.ReactNode;
   wrapperClassName?: string;
-  top?: string;
+  top?: React.ReactNode | string;
   title?: string;
 }
 export default ({ children, wrapperClassName, top, ...restProps }: PageHeaderLayout) => (

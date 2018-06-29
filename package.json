@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "cross-env HARD_SOURCE=none COMPILE_ON_DEMAND=none TSLINT=none umi dev umi dev",
+        "start": "cross-env HARD_SOURCE=none COMPILE_ON_DEMAND=none ESLINT=none umi dev umi dev",
         "build": "cross-env  BASE_URL=/app/ ESLINT=none TSLINT=none  umi build",
         "lint": "tslint  -c tslint.json 'src/**/*.{ts,tsx}",
         "precommit": "npm run lint"

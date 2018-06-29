@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 interface IStandardTableProps {
-  selectedRows: object;
+  selectedRows?: object;
   loading?: boolean;
-  data: any;
+  data?: any;
   columns?: [any];
   onSelectRow?: (selectedRows) => void;
-  rowKey: any;
+  rowKey?: any;
   onChange?: (pagination, filters, sorter) => void;
 }
 

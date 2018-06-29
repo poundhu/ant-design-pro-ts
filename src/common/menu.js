@@ -117,6 +117,17 @@ const menuData = [
             name: '注册结果',
             path: 'RegisterResult',
         }],
+    },
+    {
+        name: 'demo',
+        icon: 'user',
+        path: 'Demo',
+        children: [
+            {
+                name: '表单',
+                path: 'Table',
+            }
+        ]
     }
 ];
 
