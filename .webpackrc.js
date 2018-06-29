@@ -1,6 +1,6 @@
 const path = require('path')
 export default {
-  publicPath: "",
+  publicPath: '/app/static/',
   alias: {
     utils: path.resolve(__dirname, 'src/utils/'),
     assets: path.resolve(__dirname, 'src/assets/'),
