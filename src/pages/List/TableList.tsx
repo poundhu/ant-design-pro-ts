@@ -1,7 +1,10 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Badge, Divider } from 'antd';
+import {
+  Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown,
+  Menu, InputNumber, DatePicker, Modal, message, Badge, Divider
+} from 'antd';
 import StandardTable from 'components/StandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
@@ -51,8 +54,12 @@ const columns = [
         value: 3,
       },
     ],
-    render(val) {
-      return <Badge status={statusMap[val]} text={status[val]} />;
+    render(val: string) {
+      return (
+        <Badge
+          status={statusMap[val]}
+          text={status[val]}
+        />);
     },
   },
   {
@@ -73,7 +80,7 @@ const columns = [
   },
 ];
 
-const CreateForm = Form.create()((props) => {
+const CreateForm = Form.create()((props: any) => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
@@ -104,12 +111,13 @@ const CreateForm = Form.create()((props) => {
   );
 });
 
-@connect(({ rule, loading }) => ({
+const mapStateToProps = ({ rule, loading }) => ({
   rule,
   loading: loading.models.rule,
-}))
-@Form.create()
-export default class TableList extends PureComponent {
+});
+
+@connect(mapStateToProps)
+class TableList extends PureComponent<any, any> {
   state = {
     modalVisible: false,
     expandForm: false,
@@ -134,7 +142,7 @@ export default class TableList extends PureComponent {
       return newObj;
     }, {});
 
-    const params = {
+    const params: any = {
       currentPage: pagination.current,
       pageSize: pagination.pageSize,
       ...formValues,
@@ -150,23 +158,7 @@ export default class TableList extends PureComponent {
     });
   }
 
-  handleFormReset = () => {
-    const { form, dispatch } = this.props;
-    form.resetFields();
-    this.setState({
-      formValues: {},
-    });
-    dispatch({
-      type: 'rule/fetch',
-      payload: {},
-    });
-  }
 
-  toggleForm = () => {
-    this.setState({
-      expandForm: !this.state.expandForm,
-    });
-  }
 
   handleMenuClick = (e) => {
     const { dispatch } = this.props;
@@ -413,3 +405,5 @@ export default class TableList extends PureComponent {
     );
   }
 }
+
+export default Form.create()(TableList);

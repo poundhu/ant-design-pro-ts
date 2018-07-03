@@ -32,7 +32,7 @@
         "prefer-method-signature": false,
         "prefer-template": [true, "allow-single-concat"],
         "quotemark": [true, "single", "jsx-double"],
-        "semicolon": [true, "always"],
+        "semicolon": [true],
         "trailing-comma": [true, {
             "singleline": "never",
             "multiline": {
@@ -67,7 +67,7 @@
         "no-bitwise": true,
         "no-console": false,
         "no-consecutive-blank-lines": false,
-        "no-construct": true,
+        "no-construct": false,
         "no-debugger": true,
         "no-duplicate-variable": true,
         "no-empty": true,
