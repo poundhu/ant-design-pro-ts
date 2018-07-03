@@ -234,6 +234,15 @@ class TableList extends PureComponent<any, any> {
       modalVisible: false,
     });
   }
+  toggleForm = () => {
+    this.setState({
+      expandForm: !this.state.expandForm,
+    });
+  }
+  handleFormReset = () => {
+    const { form } = this.props;
+    form.resetFields();
+  }
 
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
