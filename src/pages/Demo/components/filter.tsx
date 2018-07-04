@@ -10,8 +10,8 @@ const FormItem = Form.Item;
 interface IFilterProps {
   form: any;
   query?: (pasams?) => {};
-  renderHeader?: (() => React.ReactType) | string | JSX.Element;
-  renderFooter?: (() => React.ReactType) | string | JSX.Element;
+  renderSimpleForm?: (() => React.ReactType) | string | JSX.Element;
+  renderExtendsForm?: (() => React.ReactType) | string | JSX.Element;
 }
 
 class Filter extends React.PureComponent<IFilterProps, any>{
