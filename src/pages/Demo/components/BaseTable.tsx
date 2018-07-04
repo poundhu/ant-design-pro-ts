@@ -2,20 +2,34 @@ import * as React from 'react';
 import {
   Table, Alert
 } from 'antd';
+import styles from './BaseTable.less';
 
-export default class TableDemo extends React.PureComponent<any, any> {
+interface IBaseTableProps {
+  loading?: boolean;
+  query?: (pasams?: object) => void;
+  bordered?: boolean;
+  columns: any;
+  data: {
+    list?: [any];
+    pagination?: object;
+  };
+}
+
+export default class BaseTable extends React.PureComponent<IBaseTableProps, any> {
+  static defaultProps = {
+    dataSource: [],
+    pagination: {},
+    bordered: true,
+  };
   constructor(props) {
     super(props);
     this.state = {
+      pageSize: 20,
+      currentPage: 1,
       selectedRowKeys: [],
-      defalultPagination: {
-        showQuickJumper: true,
-        showSizeChanger: true,
-      },
       selectedRows: [],
     };
   }
-
   cleanSelectedKeys = () => {
     this.setState({
       selectedRowKeys: [],
@@ -27,8 +41,18 @@ export default class TableDemo extends React.PureComponent<any, any> {
   onSelectChange = (selectedRowKeys: [number]) => {
     this.setState({ selectedRowKeys });
   }
-  onPageChange(pageNumber: number, pageSize: number) {
-    console.log(pageNumber, pageSize);
+  onPageChange = (pagination) => {
+    if (pagination.current) {
+      const { pageSize, current } = pagination;
+      this.setState({
+        pageSize,
+        current,
+      });
+      this.props.query({
+        pageSize: pageSize,
+        currentPage: current,
+      });
+    }
   }
   handleModalVisible(visible: boolean) {
     this.setState({
@@ -36,44 +60,52 @@ export default class TableDemo extends React.PureComponent<any, any> {
     });
   }
   render() {
-    const { loading, data, columns } = this.props;
+    const { loading, data, columns, bordered } = this.props;
     const { selectedRowKeys } = this.state;
+    const { list, pagination } = data;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
     const paginationProps = {
       onChange: this.onPageChange,
+      selectedRowKeys: [],
       showSizeChanger: true,
+      selectedRows: [],
       onShowSizeChange: this.onShowSizeChange,
+      ...pagination,
+      ...this.state,
     };
     return (
-      <div>
-        <Alert
-          message={
-            <React.Fragment>
-              已选择
+      <div className={styles.baseTable}>
+        <div className={styles.tableAlert}>
+          <Alert
+            message={
+              <React.Fragment>
+                已选择
               <a style={{ fontWeight: 600 }}>
-                {selectedRowKeys.length}
-              </a> 项&nbsp;&nbsp;
+                  {selectedRowKeys.length}
+                </a> 项&nbsp;&nbsp;
               <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>
-                清空
+                  清空
               </a>
-            </React.Fragment>
-          }
-          type="info"
-          showIcon
-        />
+              </React.Fragment>
+            }
+            type="info"
+            showIcon
+          />
+        </div>
         <Table
-          dataSource={data}
+          dataSource={list}
           pagination={paginationProps}
           loading={loading}
           columns={columns}
-          bordered
+          bordered={bordered}
+          onChange={this.onPageChange}
           rowSelection={rowSelection}
+          rowKey={'id'}
         />
       </div>
-
     );
   }
 }

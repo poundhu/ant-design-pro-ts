@@ -8,6 +8,7 @@ interface PageHeaderLayout {
   wrapperClassName?: string;
   top?: React.ReactNode | string;
   title?: string;
+  content?: React.ReactNode | string;
 }
 export default ({ children, wrapperClassName, top, ...restProps }: PageHeaderLayout) => (
   <div style={{ margin: '-24px -24px 0' }} className={wrapperClassName}>

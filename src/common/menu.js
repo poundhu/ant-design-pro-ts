@@ -125,7 +125,7 @@ const menuData = [
         children: [
             {
                 name: '表单',
-                path: 'Table',
+                path: 'TableDemo',
             }
         ]
     }

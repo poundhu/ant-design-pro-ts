@@ -1,25 +1,36 @@
-import React from 'react';
+import * as React from 'react';
 import {
-  Row, Col, Form, Input, Select, Icon, Button, InputNumber, DatePicker,
+  Row, Col, Form, Input, Select, Button, Modal
 } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import styles from './BaseTable.less';
 
 const { Option } = Select;
-
 const FormItem = Form.Item;
 
 interface IFilterProps {
   form: any;
   query?: (pasams?) => {};
+  renderHeader?: (() => React.ReactType) | string | JSX.Element;
+  renderFooter?: (() => React.ReactType) | string | JSX.Element;
 }
 
 class Filter extends React.PureComponent<IFilterProps, any>{
   state = {
-    expandForm: false,
+    visible: false,
   };
-  toggleForm = () => {
+  showModal = () => {
     this.setState({
-      expandForm: !this.state.expandForm,
+      visible: true,
+    });
+  }
+  handleOk = () => {
+    this.setState({
+      visible: false,
+    });
+  }
+  handleCancel = () => {
+    this.setState({
+      visible: false,
     });
   }
   handleSearch = (e) => {
@@ -41,7 +52,7 @@ class Filter extends React.PureComponent<IFilterProps, any>{
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSearch} layout="inline">
+      <Form layout="inline" onSubmit={this.handleSearch}>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="规则编号">
@@ -51,33 +62,21 @@ class Filter extends React.PureComponent<IFilterProps, any>{
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <span>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                展开 <Icon type="down" />
-              </a>
-            </span>
+            <Button
+              type="primary"
+              onClick={this.showModal}
+            >
+              高级搜索
+            </Button>
           </Col>
         </Row>
       </Form>
     );
   }
-
-  renderAdvancedForm() {
+  renderExtendsForm() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSearch} layout="inline">
+      <Form layout="inline" onSubmit={this.handleSearch}>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="规则编号">
@@ -96,62 +95,34 @@ class Filter extends React.PureComponent<IFilterProps, any>{
               )}
             </FormItem>
           </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="调用次数">
-              {getFieldDecorator('number')(
-                <InputNumber style={{ width: '100%' }} />
-              )}
-            </FormItem>
-          </Col>
         </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="更新日期">
-              {getFieldDecorator('date')(
-                <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status3')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status4')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-        </Row>
-        <div style={{ overflow: 'hidden' }}>
-          <span style={{ float: 'right', marginBottom: 24 }}>
-            <Button type="primary" htmlType="submit">查询</Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-            <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-              收起 <Icon type="up" />
-            </a>
-          </span>
-        </div>
       </Form>
     );
   }
   render() {
-    const { expandForm } = this.state;
+    const { visible } = this.state;
     return (
-      <Form>
-        {this.renderSimpleForm()}
-        {expandForm && this.renderAdvancedForm()}
-      </Form>
+      <div>
+        {
+          <div className={styles.tableListForm}>
+            {this.renderSimpleForm()}
+          </div>
+        }
+        <Modal
+          title="高级搜索"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          mask={true}
+          style={{ top: 165 }}
+          width={780}
+        >
+
+          <div className={styles.tableListForm}>
+            {visible && this.renderExtendsForm()}
+          </div>
+        </Modal>
+      </div>
     );
   }
 }

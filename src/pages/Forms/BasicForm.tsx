@@ -6,16 +6,14 @@ import {
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './style.less';
 
+
 const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-@connect(({ loading }) => ({
-  submitting: loading.effects['form/submitRegularForm'],
-}))
-@Form.create()
-export default class BasicForms extends PureComponent {
+
+class BasicForms extends PureComponent<any, any> {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -51,7 +49,10 @@ export default class BasicForms extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="基础表单" content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。">
+      <PageHeaderLayout
+        title="基础表单"
+        content="表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。"
+      >
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
@@ -186,3 +187,8 @@ export default class BasicForms extends PureComponent {
     );
   }
 }
+
+const mapStateToProps = ({ loading }) => ({
+  submitting: loading.effects['form/submitRegularForm'],
+});
+export default Form.create()(connect(mapStateToProps)(BasicForms));

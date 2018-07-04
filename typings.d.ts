@@ -12,6 +12,7 @@ declare module "*.json" {
 declare interface Window {
   APP: any;
   __state__: any;
+  g_app: any;
 }
 
 interface CommonElement {

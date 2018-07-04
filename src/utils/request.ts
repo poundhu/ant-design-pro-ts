@@ -1,8 +1,15 @@
-import fetch from 'dva/fetch';
 import { notification } from 'antd';
-import router from "umi/router";
-import { config } from "utils";
-const {  serverUrl } = config;
+import router from 'umi/router';
+import axios from 'axios';
+import qs from 'qs';
+import { apiPrefix } from './config';
+
+axios.defaults.baseURL = apiPrefix;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.get['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.timeout = 5000;
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -22,57 +29,25 @@ const codeMessage = {
 };
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response;
+    return response.data;
   }
   const errortext = codeMessage[response.status] || response.statusText;
   notification.error({
     message: `请求错误 ${response.status}: ${response.url}`,
     description: errortext,
   });
-  const error = new Error(errortext);
+  const error: any = new Error(errortext);
   error.name = response.status;
   error.response = response;
   throw error;
 }
 
-/**
- * Requests a URL, returning a promise.
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- * @return {object}           An object containing either "data" or "err"
- */
-export default function request(url, options) {
-  url = serverUrl+url;
-  const defaultOptions = {
-    // credentials: 'include',
-  };
-  const newOptions = { ...defaultOptions, ...options };
-  if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
-    if (!(newOptions.body instanceof FormData)) {
-      newOptions.headers = {
-        Accept: 'application/json',
-        'Content-Type': 'application/json; charset=utf-8',
-        ...newOptions.headers,
-      };
-      newOptions.body = JSON.stringify(newOptions.body);
-    } else {
-      // newOptions.body is FormData
-      newOptions.headers = {
-        Accept: 'application/json',
-        ...newOptions.headers,
-      };
-    }
+export default function request(options) {
+  if (options.method === 'post') {
+    options.data = qs.stringify(options.data);
   }
-
-  return fetch(url, newOptions)
+  return axios.request(options)
     .then(checkStatus)
-    .then(response => {
-      if (newOptions.method === 'DELETE' || response.status === 204) {
-        return response.text();
-      }
-      return response.json();
-    })
     .catch(e => {
       const dispatch = window.g_app._store.dispatch;
       const status = e.name;
@@ -95,3 +70,4 @@ export default function request(url, options) {
       }
     });
 }
+

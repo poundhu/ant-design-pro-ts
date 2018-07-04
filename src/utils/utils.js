@@ -159,3 +159,20 @@ const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-
 export function isUrl(path) {
   return reg.test(path);
 }
+
+
+export function formatDate(date) {
+  /* eslint no-confusing-arrow: 0 */
+  const pad = n => n < 10 ? `0${n}` : n;
+  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  // const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return `${dateStr}`;
+}
+
+export function formatFullDate(date) {
+  const pad = n => n < 10 ? `0${n}` : n;
+  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return `${dateStr}${timeStr}`;
+}
+

@@ -13,7 +13,9 @@
             "utils": ["src/utils"],
             "assets": ["src/assets"],
             "common": ["src/common"],
-            "services": ["src/services"]
+            "services": ["src/services"],
+            "interfaces": ["src/interfaces"],
+            "layouts": ["src/layouts"]
         },
         "allowSyntheticDefaultImports": true
     }
